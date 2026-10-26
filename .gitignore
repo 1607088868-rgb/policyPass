@@ -1,0 +1,24 @@
+# 构建产物
+out/
+target/
+build/
+*.class
+*.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+
+# 本地测试数据
+sample_profile.json
+*.log
+
+# 系统
+.DS_Store
+Thumbs.db

@@ -1,0 +1,317 @@
+{
+  "meta": {
+    "name": "政合我意 · 山东中小制造企业政策资格体检",
+    "version": "0.2.0",
+    "region": "山东省",
+    "updated": "2026-10-17",
+    "disclaimer": "本政策库为演示用示例数据:政策名称取自公开政策类型,条款号为示意编号,原文片段为整理转写,未逐字校对。正式对外使用前,须由政策研究人员导入主管部门发布的原文并逐条复核(机器抽取 + 人工复核双轨制)。本工具输出不构成申报建议,最终以主管部门认定为准。"
+  },
+  "fields": {
+    "name": { "label": "企业名称", "type": "text", "group": "基本信息" },
+    "industry": { "label": "所属行业", "type": "select", "group": "基本信息",
+      "options": ["通用设备制造", "专用设备制造", "金属制品", "医药制造", "电子信息", "汽车零部件", "化工", "新材料", "食品加工", "其他制造"] },
+    "region": { "label": "注册地区县", "type": "select", "group": "基本信息",
+      "options": ["济南", "青岛", "烟台", "潍坊", "淄博", "济宁", "临沂", "其他"] },
+    "founded_year": { "label": "成立年份", "type": "year", "group": "基本信息", "hint": "如 2015" },
+    "employees": { "label": "参保人数", "type": "number", "unit": "人", "group": "基本信息", "min": 0 },
+    "scale": { "label": "企业规模", "type": "select", "group": "经营数据",
+      "options": ["规上", "规下"] },
+    "annual_revenue": { "label": "上年度营业收入", "type": "number", "unit": "万元", "group": "经营数据", "min": 0 },
+    "rd_expense": { "label": "上年度研发费用", "type": "number", "unit": "万元", "group": "经营数据", "min": 0 },
+    "tax_total": { "label": "上年度纳税总额", "type": "number", "unit": "万元", "group": "经营数据", "min": 0 },
+    "rd_staff_ratio": { "label": "研发人员占比", "type": "number", "unit": "%", "group": "研发与资质", "min": 0, "max": 100 },
+    "high_tech": { "label": "是否高新技术企业", "type": "bool", "group": "研发与资质" },
+    "rd_institution": { "label": "研发机构等级", "type": "select", "group": "研发与资质",
+      "options": ["无", "市级", "省级", "国家级"] },
+    "specialized_sme": { "label": "是否专精特新中小企业", "type": "bool", "group": "研发与资质" },
+    "tech_sme": { "label": "是否科技型中小企业", "type": "bool", "group": "研发与资质" },
+    "invention_patents": { "label": "发明专利数量", "type": "number", "unit": "项", "group": "研发与资质", "min": 0 },
+    "equipment_investment": { "label": "近两年技改设备投入", "type": "number", "unit": "万元", "group": "研发与资质", "min": 0 },
+    "main_product_share": { "label": "主导产品细分市场占有率", "type": "number", "unit": "%", "group": "研发与资质", "min": 0, "max": 100 },
+    "legal_violation": { "label": "近三年是否有重大违法失信记录", "type": "bool", "group": "合规" },
+    "iso9001": { "label": "是否通过 ISO9001 质量管理体系认证", "type": "bool", "group": "进阶资质" },
+    "green_factory": { "label": "绿色工厂等级", "type": "select", "group": "进阶资质",
+      "options": ["无", "市级", "省级", "国家级"] },
+    "digital_workshop": { "label": "是否建成数字化车间/智能工厂", "type": "bool", "group": "进阶资质" },
+    "first_set": { "label": "是否有首台(套)重大技术装备产品", "type": "bool", "group": "进阶资质" },
+    "integration_mgmt": { "label": "是否通过两化融合管理体系贯标", "type": "bool", "group": "进阶资质" },
+    "industrial_design_center": { "label": "工业设计中心等级", "type": "select", "group": "进阶资质",
+      "options": ["无", "市级", "省级", "国家级"] }
+  },
+  "policies": [
+    {
+      "id": "P001",
+      "name": "山东省“专精特新”中小企业认定",
+      "level": "省级",
+      "category": "资质认定",
+      "summary": "面向专业化、精细化、特色化、新颖化中小企业的省级资质,通过后可申报各级配套奖补。",
+      "benefit": { "amount": 30, "unit": "万元", "desc": "省级认定通过后一次性奖补 30 万元(部分地市另有配套奖励)" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 2,
+          "clause": "第二条（一）", "text": "企业成立满两年以上。", "desc": "成立满 2 年" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 1000, "max": null, "unit": "万元",
+          "clause": "第三条（二）", "text": "上年度营业收入不低于 1000 万元。", "desc": "不低于 1000 万元" },
+        { "id": "C3", "type": "NumRange", "field": "rd_ratio", "min": 3.0, "max": null, "unit": "%",
+          "clause": "第三条（三）", "text": "上年度研发费用占营业收入的比例不低于 3%。", "desc": "不低于 3%" },
+        { "id": "C4", "type": "NumRange", "field": "invention_patents", "min": 1, "max": null, "unit": "项",
+          "clause": "第三条（四）", "text": "拥有与主导产品相关的发明专利 1 项以上。", "desc": "不少于 1 项" },
+        { "id": "C5", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第四条", "text": "近三年无重大安全生产、环境污染等违法违规记录。", "desc": "无重大违法记录" }
+      ]
+    },
+    {
+      "id": "P002",
+      "name": "国家高新技术企业认定（山东）",
+      "level": "国家级",
+      "category": "资质认定",
+      "summary": "企业所得税减按 15% 征收,首次通过认定由省级财政给予奖励,是研发型企业的基础资质。",
+      "benefit": { "amount": 20, "unit": "万元", "desc": "企业所得税减按 15% 征收;首次通过认定,省级财政给予 10–20 万元奖励" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 1,
+          "clause": "第六条", "text": "企业申请认定时须注册成立一年以上。", "desc": "成立满 1 年" },
+        { "id": "C2", "type": "NumRange", "field": "rd_ratio", "min": 5.0, "max": null, "unit": "%",
+          "clause": "第十一条（五）", "text": "最近一年营业收入 5000 万元以下的企业,研发费用总额占同期销售收入总额的比例不低于 5%。", "desc": "不低于 5%(营收 5000 万元以下适用)" },
+        { "id": "C3", "type": "NumRange", "field": "rd_staff_ratio", "min": 10.0, "max": null, "unit": "%",
+          "clause": "第十一条（四）", "text": "企业从事研发和相关技术创新活动的科技人员占企业当年职工总数的比例不低于 10%。", "desc": "不低于 10%" },
+        { "id": "C4", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第十九条", "text": "企业未发生重大安全、重大质量事故或严重环境违法行为。", "desc": "无重大事故或违法行为" }
+      ]
+    },
+    {
+      "id": "P003",
+      "name": "专精特新“小巨人”企业（国家级）",
+      "level": "国家级",
+      "category": "资质认定",
+      "summary": "在“专精特新”基础上择优认定的国家级尖子企业,中央财政给予奖励。",
+      "benefit": { "amount": 200, "unit": "万元", "desc": "中央财政奖补 200 万元,省级另有配套奖励" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 3,
+          "clause": "第二条", "text": "企业成立满三年以上。", "desc": "成立满 3 年" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 5000, "max": 40000, "unit": "万元",
+          "clause": "第三条", "text": "上年度营业收入在 5000 万元至 4 亿元之间。", "desc": "5000 万元 — 4 亿元之间" },
+        { "id": "C3", "type": "NumRange", "field": "rd_ratio", "min": 3.0, "max": null, "unit": "%",
+          "clause": "第三条", "text": "上年度研发费用占营业收入的比例不低于 3%。", "desc": "不低于 3%" },
+        { "id": "C4", "type": "NumRange", "field": "invention_patents", "min": 2, "max": null, "unit": "项",
+          "clause": "第四条", "text": "拥有与主导产品相关的发明专利 2 项以上。", "desc": "不少于 2 项" }
+      ]
+    },
+    {
+      "id": "P004",
+      "name": "山东省制造业单项冠军企业",
+      "level": "省级",
+      "category": "资质认定",
+      "summary": "长期专注于特定细分产品市场、市场占有率居全省前列的制造企业。",
+      "benefit": { "amount": 100, "unit": "万元", "desc": "省级一次性奖励 100 万元" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 3,
+          "clause": "第二条", "text": "企业成立满三年以上。", "desc": "成立满 3 年" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 10000, "max": null, "unit": "万元",
+          "clause": "第三条", "text": "上年度营业收入 1 亿元以上。", "desc": "不低于 1 亿元" },
+        { "id": "C3", "type": "NumRange", "field": "main_product_share", "min": 20.0, "max": null, "unit": "%",
+          "clause": "第四条", "text": "主导产品细分市场占有率居全省前列,市场占有率不低于 20%。", "desc": "不低于 20%" },
+        { "id": "C4", "type": "NumRange", "field": "rd_ratio", "min": 3.0, "max": null, "unit": "%",
+          "clause": "第五条", "text": "研发投入占营业收入比例不低于 3%。", "desc": "不低于 3%" }
+      ]
+    },
+    {
+      "id": "P005",
+      "name": "创新型中小企业（入库）",
+      "level": "省级",
+      "category": "资质认定",
+      "summary": "专精特新培育体系的第一层级,门槛较低,是进入省级政策链条的起点。",
+      "benefit": { "amount": 10, "unit": "万元", "desc": "入库后一次性奖励 10 万元(部分地市配套),并可优先申报省级专精特新" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 1,
+          "clause": "第三条（一）", "text": "企业注册成立满一年以上。", "desc": "成立满 1 年" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 500, "max": null, "unit": "万元",
+          "clause": "第三条（二）", "text": "上年度营业收入不低于 500 万元。", "desc": "不低于 500 万元" },
+        { "id": "C3", "type": "NumRange", "field": "rd_ratio", "min": 2.0, "max": null, "unit": "%",
+          "clause": "第三条（三）", "text": "上年度研发费用占营业收入的比例不低于 2%。", "desc": "不低于 2%" },
+        { "id": "C4", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第四条", "text": "近三年无重大违法失信记录。", "desc": "无重大违法记录" }
+      ]
+    },
+    {
+      "id": "P006",
+      "name": "市级“专精特新”中小企业（济南）",
+      "level": "市级",
+      "category": "资质认定",
+      "summary": "市级培育层,门槛低于省级,通常作为申报省级专精特新的前置台阶。",
+      "benefit": { "amount": 15, "unit": "万元", "desc": "市级认定后一次性奖励 15 万元(以济南市为例)" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 2,
+          "clause": "第二条（一）", "text": "企业成立满两年以上。", "desc": "成立满 2 年" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 500, "max": null, "unit": "万元",
+          "clause": "第二条（二）", "text": "上年度营业收入不低于 500 万元。", "desc": "不低于 500 万元" },
+        { "id": "C3", "type": "NumRange", "field": "rd_ratio", "min": 2.5, "max": null, "unit": "%",
+          "clause": "第二条（三）", "text": "上年度研发费用占营业收入的比例不低于 2.5%。", "desc": "不低于 2.5%" },
+        { "id": "C4", "type": "NumRange", "field": "invention_patents", "min": 1, "max": null, "unit": "项",
+          "clause": "第三条", "text": "拥有与主导产品相关的发明专利 1 项以上。", "desc": "不少于 1 项" },
+        { "id": "C5", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第四条", "text": "近三年无重大违法失信记录。", "desc": "无重大违法记录" }
+      ]
+    },
+    {
+      "id": "P007",
+      "name": "科技型中小企业评价入库",
+      "level": "国家级",
+      "category": "资质认定",
+      "summary": "入库后可享受研发费用加计扣除等优惠,是申报更高层次科技项目的起点。",
+      "benefit": { "amount": 0, "unit": "万元", "desc": "入库后享受研发费用 100% 加计扣除;部分地市给予一次性 5–10 万元奖励" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 1,
+          "clause": "第五条", "text": "企业注册成立满一年以上。", "desc": "成立满 1 年" },
+        { "id": "C2", "type": "NumRange", "field": "rd_expense", "min": 50, "max": null, "unit": "万元",
+          "clause": "第十条", "text": "上年度研发费用总额不低于 50 万元。", "desc": "不低于 50 万元" },
+        { "id": "C3", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第十二条", "text": "近三年无重大安全、质量事故或严重违法失信行为。", "desc": "无重大事故或失信行为" }
+      ]
+    },
+    {
+      "id": "P008",
+      "name": "山东省“瞪羚企业”认定",
+      "level": "省级",
+      "category": "资质认定",
+      "summary": "面向成长速度快、创新能力强的高新技术企业,是区域成长性评价的重要标签。",
+      "benefit": { "amount": 50, "unit": "万元", "desc": "省级认定后一次性奖励 50 万元(部分地市配套)" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 3,
+          "clause": "第二条（一）", "text": "企业成立满三年以上。", "desc": "成立满 3 年" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 2000, "max": 40000, "unit": "万元",
+          "clause": "第二条（二）", "text": "上年度营业收入在 2000 万元至 4 亿元之间。", "desc": "2000 万元 — 4 亿元之间" },
+        { "id": "C3", "type": "NumRange", "field": "rd_ratio", "min": 3.0, "max": null, "unit": "%",
+          "clause": "第三条", "text": "上年度研发费用占营业收入的比例不低于 3%。", "desc": "不低于 3%" },
+        { "id": "C4", "type": "BoolReq", "field": "high_tech", "required": true,
+          "clause": "第四条", "text": "企业须为有效期内的高新技术企业。", "desc": "须为高新技术企业" }
+      ]
+    },
+    {
+      "id": "P009",
+      "name": "山东省企业技术改造设备奖补",
+      "level": "省级",
+      "category": "财政奖补",
+      "summary": "对实施技术改造、购置生产设备的企业,按设备投资额给予事后奖补。",
+      "benefit": { "amount": 62, "unit": "万元", "desc": "按设备投资额的 10% 给予奖补,单个项目最高 500 万元(示例:投入 620 万元可获约 62 万元)" },
+      "conditions": [
+        { "id": "C1", "type": "NumRange", "field": "equipment_investment", "min": 500, "max": null, "unit": "万元",
+          "clause": "第二条", "text": "项目设备投资额不低于 500 万元。", "desc": "不低于 500 万元" },
+        { "id": "C2", "type": "EnumIn", "field": "scale", "allowed": ["规上"],
+          "clause": "第三条", "text": "申报企业须为规模以上工业企业。", "desc": "规模以上工业企业" },
+        { "id": "C3", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第五条", "text": "企业近三年无重大违法失信记录。", "desc": "无重大违法失信记录" }
+      ]
+    },
+    {
+      "id": "P010",
+      "name": "首台（套）重大技术装备奖补",
+      "level": "省级",
+      "category": "财政奖补",
+      "summary": "对首台(套)重大技术装备的研制与推广应用给予奖补,需先取得首台(套)认定。",
+      "benefit": { "amount": 80, "unit": "万元", "desc": "按首台(套)产品销售额或研制投入给予奖补,单台(套)最高 80 万元" },
+      "conditions": [
+        { "id": "C1", "type": "BoolReq", "field": "first_set", "required": true,
+          "clause": "第二条", "text": "申报产品须列入当年首台(套)重大技术装备认定名单。", "desc": "须有首台(套)认定产品" },
+        { "id": "C2", "type": "YearLimit", "field": "founded_year", "years": 2,
+          "clause": "第三条", "text": "企业成立满两年以上。", "desc": "成立满 2 年" },
+        { "id": "C3", "type": "NumRange", "field": "rd_ratio", "min": 3.0, "max": null, "unit": "%",
+          "clause": "第三条", "text": "上年度研发费用占营业收入的比例不低于 3%。", "desc": "不低于 3%" }
+      ]
+    },
+    {
+      "id": "P011",
+      "name": "省级绿色工厂奖补",
+      "level": "省级",
+      "category": "财政奖补",
+      "summary": "对通过省级及以上绿色工厂评价的企业给予奖补,体现能耗与环保绩效。",
+      "benefit": { "amount": 50, "unit": "万元", "desc": "省级绿色工厂一次性奖励 50 万元,国家级另按政策配套" },
+      "conditions": [
+        { "id": "C1", "type": "EnumIn", "field": "green_factory", "allowed": ["省级", "国家级"],
+          "clause": "第二条（一）", "text": "企业须列入省级或国家级绿色工厂名单。", "desc": "省级或国家级绿色工厂" },
+        { "id": "C2", "type": "YearLimit", "field": "founded_year", "years": 2,
+          "clause": "第二条（二）", "text": "企业成立满两年以上。", "desc": "成立满 2 年" },
+        { "id": "C3", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第三条", "text": "近三年无重大环保、安全违法行为。", "desc": "无重大环保安全违法" }
+      ]
+    },
+    {
+      "id": "P012",
+      "name": "数字化车间 / 智能工厂奖补",
+      "level": "省级",
+      "category": "财政奖补",
+      "summary": "对建成数字化车间或智能工厂并投入使用、达到评价标准的企业给予奖补。",
+      "benefit": { "amount": 60, "unit": "万元", "desc": "按项目投入的 10% 给予奖补,单个项目最高 60 万元" },
+      "conditions": [
+        { "id": "C1", "type": "BoolReq", "field": "digital_workshop", "required": true,
+          "clause": "第二条（一）", "text": "企业须已建成数字化车间或智能工厂并通过评价。", "desc": "须建成数字化车间/智能工厂" },
+        { "id": "C2", "type": "NumRange", "field": "annual_revenue", "min": 1000, "max": null, "unit": "万元",
+          "clause": "第二条（二）", "text": "上年度营业收入不低于 1000 万元。", "desc": "不低于 1000 万元" },
+        { "id": "C3", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第三条", "text": "近三年无重大违法失信记录。", "desc": "无重大违法记录" }
+      ]
+    },
+    {
+      "id": "P013",
+      "name": "工业设计中心奖补",
+      "level": "省级",
+      "category": "财政奖补",
+      "summary": "对认定为国家或省级工业设计中心的企业给予奖补,考核设计投入与设计成果转化。",
+      "benefit": { "amount": 40, "unit": "万元", "desc": "省级工业设计中心奖励 40 万元,国家级按政策另行配套" },
+      "conditions": [
+        { "id": "C1", "type": "EnumIn", "field": "industrial_design_center", "allowed": ["省级", "国家级"],
+          "clause": "第二条（一）", "text": "企业工业设计中心须获得省级或国家级认定。", "desc": "省级或国家级工业设计中心" },
+        { "id": "C2", "type": "NumRange", "field": "rd_ratio", "min": 2.0, "max": null, "unit": "%",
+          "clause": "第二条（二）", "text": "上年度研发费用占营业收入的比例不低于 2%。", "desc": "不低于 2%" },
+        { "id": "C3", "type": "YearLimit", "field": "founded_year", "years": 2,
+          "clause": "第三条", "text": "企业成立满两年以上。", "desc": "成立满 2 年" }
+      ]
+    },
+    {
+      "id": "P014",
+      "name": "两化融合管理体系贯标奖补",
+      "level": "市级",
+      "category": "财政奖补",
+      "summary": "对通过两化融合管理体系贯标评定的企业给予一次性奖励。",
+      "benefit": { "amount": 20, "unit": "万元", "desc": "通过贯标评定后一次性奖励 20 万元(以地市政策为例)" },
+      "conditions": [
+        { "id": "C1", "type": "BoolReq", "field": "integration_mgmt", "required": true,
+          "clause": "第二条", "text": "企业须通过两化融合管理体系贯标评定。", "desc": "须通过贯标评定" },
+        { "id": "C2", "type": "YearLimit", "field": "founded_year", "years": 1,
+          "clause": "第三条", "text": "企业成立满一年以上。", "desc": "成立满 1 年" },
+        { "id": "C3", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第四条", "text": "近三年无重大违法失信记录。", "desc": "无重大违法记录" }
+      ]
+    },
+    {
+      "id": "P015",
+      "name": "研发费用加计扣除（企业所得税优惠）",
+      "level": "国家级",
+      "category": "税收优惠",
+      "summary": "企业实际发生的研发费用,在据实扣除基础上再按 100% 加计扣除,直接减少应纳税所得额。",
+      "benefit": { "amount": 0, "unit": "万元", "desc": "研发费用未形成无形资产的按 100% 加计扣除;形成无形资产的按 200% 摊销" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 1,
+          "clause": "第三条", "text": "企业成立满一年以上。", "desc": "成立满 1 年" },
+        { "id": "C2", "type": "NumRange", "field": "rd_expense", "min": 1, "max": null, "unit": "万元",
+          "clause": "第二条", "text": "企业实际发生研发费用支出。", "desc": "有实际研发支出" }
+      ]
+    },
+    {
+      "id": "P016",
+      "name": "山东省质量奖（制造业）",
+      "level": "省级",
+      "category": "资质认定",
+      "summary": "对质量管理水平领先、质量绩效显著的制造企业给予的政府质量荣誉。",
+      "benefit": { "amount": 30, "unit": "万元", "desc": "获奖企业一次性奖励 30 万元,并在政府采购等场景获得加分" },
+      "conditions": [
+        { "id": "C1", "type": "YearLimit", "field": "founded_year", "years": 3,
+          "clause": "第二条", "text": "企业成立满三年以上。", "desc": "成立满 3 年" },
+        { "id": "C2", "type": "BoolReq", "field": "iso9001", "required": true,
+          "clause": "第三条（一）", "text": "企业须通过 ISO9001 质量管理体系认证并有效运行。", "desc": "已通过 ISO9001 认证" },
+        { "id": "C3", "type": "NumRange", "field": "annual_revenue", "min": 5000, "max": null, "unit": "万元",
+          "clause": "第三条（二）", "text": "上年度营业收入不低于 5000 万元。", "desc": "不低于 5000 万元" },
+        { "id": "C4", "type": "BoolReq", "field": "legal_violation", "required": false,
+          "clause": "第四条", "text": "近三年无重大质量、安全、环保事故。", "desc": "无重大事故" }
+      ]
+    }
+  ]
+}
